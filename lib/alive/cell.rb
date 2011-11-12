@@ -24,8 +24,12 @@ module Alive
       end
     end
 
+    def alive?
+      @world.cells.include?(self)
+    end
+    
     def dead?
-      !@world.cells.include?(self)
+      !alive?
     end
 
     def inspect

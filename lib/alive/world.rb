@@ -11,5 +11,9 @@ module Alive
         @cells -= [cell] if cell.neighbours.count < 2
       end
     end
+
+    def clear
+      @cells = []
+    end
   end
 end

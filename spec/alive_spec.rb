@@ -9,4 +9,21 @@ describe "Alive" do
     world.tick!
     cell.dead?.should be_true
   end
+
+  it "Rule #2: Any live cell with two or three live neighbours lives on to the next generation" do
+    cell = Alive::Cell.new(world)
+    neighbour1 = cell.spawn_at(1,0)
+    neighbour2 = cell.spawn_at(-1,1)
+    world.tick!
+    cell.alive?.should be_true
+
+    world.clear
+
+    cell = Alive::Cell.new(world)
+    neighbour1 = cell.spawn_at(1,0)
+    neighbour2 = cell.spawn_at(-1,1)
+    neighbour3 = cell.spawn_at(0,1)
+    world.tick!
+    cell.alive?.should be_true
+  end
 end
