@@ -26,4 +26,15 @@ describe "Alive" do
     world.tick!
     cell.alive?.should be_true
   end
+
+  it "Rule #3: Any live cell with more than three live neighbours dies, as if by overcrowding" do
+    cell = Alive::Cell.new(world)
+    cell.spawn_at(1,0)
+    cell.spawn_at(0,1)
+    cell.spawn_at(1,1)
+    cell.spawn_at(1,-1)
+
+    world.tick!
+    cell.dead?.should be_true
+  end
 end

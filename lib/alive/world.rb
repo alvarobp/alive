@@ -8,7 +8,7 @@ module Alive
 
     def tick!
       @cells.each do |cell|
-        @cells -= [cell] if cell.neighbours.count < 2
+        @cells -= [cell] if cell.neighbours.count < 2 || cell.neighbours.count > 3
       end
     end
 
