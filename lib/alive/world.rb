@@ -4,35 +4,38 @@ module Alive
 
     def initialize
       @cells = []
-      @dead_cells = []
     end
 
     def tick!
-      @next_alive_cells = []
-      @next_dead_cells = []
+      @will_live = []
+      @will_die = []
       
-      @cells.each do |cell|
-        if cell.neighbours.count < 2 || cell.neighbours.count > 3
-          @next_dead_cells << cell
-        else
-          @next_alive_cells << cell
+      alive_cells.each do |cell|
+        if cell.alive_neighbours.count < 2 || cell.alive_neighbours.count > 3
+          @will_die << cell
         end
       end
       
-      @dead_cells.each do |cell|
-        if cell.neighbours.count == 3
-          @dead_cells -= [cell]
-          @next_alive_cells << cell
+      dead_cells.each do |cell|
+        if cell.alive_neighbours.count == 3
+          @will_live << cell
         end
       end
-      
-      @dead_cells += @next_dead_cells
-      @cells = @next_alive_cells
+
+      @will_live.each { |c| c.live! }
+      @will_die.each { |c| c.die! }
     end
 
+    def alive_cells
+      @cells.select { |c| c.alive? }
+    end
+
+    def dead_cells
+      @cells.select { |c| c.dead? }
+    end
+    
     def clear
       @cells = []
-      @dead_cells = []
     end
   end
 end

@@ -1,18 +1,19 @@
 module Alive
   class Cell
-    attr_accessor :world, :x, :y
+    attr_accessor :world, :alive, :x, :y
     
-    def initialize(world, x=0, y=0)
+    def initialize(world, values={})
       @world = world
-      @x = x
-      @y = y
+      @x = values[:x] || 0
+      @y = values[:y] || 0
+      @alive = values[:alive] || false
       @world.cells << self
     end
 
-    def spawn_at(x,y)
-      Cell.new(@world, x, y)
+    def alive_neighbours
+      neighbours.select { |cell| cell.alive? }
     end
-
+    
     def neighbours
       (@world.cells - [self]).inject([]) do |array, candidate|
         if (x == candidate.x && adjacent_y.include?(candidate.y)) ||
@@ -24,8 +25,16 @@ module Alive
       end
     end
 
+    def live!
+      @alive = true
+    end
+
+    def die!
+      @alive = false
+    end
+    
     def alive?
-      @world.cells.include?(self)
+      @alive
     end
     
     def dead?
@@ -33,7 +42,7 @@ module Alive
     end
 
     def inspect
-      "<Alive::Cell @x=#{x.inspect} @y=#{y.inspect}>"
+      "<Alive::Cell @x=#{x.inspect} @y=#{y.inspect} @alive=#{alive}>"
     end
     
     def to_s

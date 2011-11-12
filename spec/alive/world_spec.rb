@@ -9,7 +9,7 @@ describe "Alive::World" do
 
   it "can be cleared up" do
     Alive::Cell.new(world)
-    Alive::Cell.new(world, 1, 2)
+    Alive::Cell.new(world, :x => 1, :y => 2)
     world.cells.size.should == 2
     world.clear
     world.cells.should be_empty
