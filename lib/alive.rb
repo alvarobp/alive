@@ -1,5 +1,4 @@
 require "alive/version"
+require "alive/cell"
+require "alive/world"
 
-module Alive
-  # Your code goes here...
-end
